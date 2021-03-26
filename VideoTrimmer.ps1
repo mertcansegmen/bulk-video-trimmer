@@ -1,6 +1,6 @@
 param (
-    [Parameter(Mandatory=$true)]
-    [string]$FolderPath,
+    [Parameter(Mandatory=$false)]
+    [string]$FolderPath = "./",
     [Parameter(Mandatory=$false)]
     [string]$OutputPath = "./"
 )
