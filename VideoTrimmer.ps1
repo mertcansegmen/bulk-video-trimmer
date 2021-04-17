@@ -2,18 +2,31 @@ param (
     [Parameter(Mandatory=$false)]
     [string]$FolderPath = "./",
     [Parameter(Mandatory=$false)]
-    [string]$OutputPath = "./"
+    [string]$OutputFolder = "./"
 )
 
-$mp4FilePaths = Get-ChildItem -Path $FolderPath -Include "*.mp4" -Recurse
+$Mp4FilePaths = Get-ChildItem -Path $FolderPath -Include "*.mp4" -Recurse
 
-foreach($mp4FilePath in $mp4FilePaths) {
-    $fileName = (Get-Item $mp4FilePath).Basename
-    $createdAt = (Get-Item $mp4FilePath).CreationTime.ToString("yyyy-MM-dd_")
-    $fileInfo = "$fileName" -Split "\+"
-    $videoName = $fileInfo[0]
-    $start = "00:" + $fileInfo[1].Replace("-", ":")
-    $end = "00:" + $fileInfo[2].Replace("-", ":")
-    
-    ffmpeg -ss $start -to $end -i $mp4FilePath -vcodec libx265 -crf 28 "$OutputPath/$createdAt$videoName.mp4"
+foreach($Mp4FilePath in $Mp4FilePaths) {
+    $FileName = (Get-Item $Mp4FilePath).Basename
+    $FileInfo = "$FileName" -Split ","
+    $VideoName = $FileInfo[0].Trim()
+    $Start = "00:" + $FileInfo[1].Trim().Replace(".", ":")
+    $End = "00:" + $FileInfo[2].Trim().Replace(".", ":")
+
+    $OutputFilePath = "$OutputFolder/$VideoName.mp4"
+
+    ffmpeg -ss $Start `
+            -to $End `
+            -i "$Mp4FilePath" `
+            -vcodec libx265 `
+            -crf 28 $OutputFilePath
+
+    $CreationTime = (Get-Item $Mp4FilePath).CreationTime.ToString("yyyy-MM-dd HH:mm:ss")
+    $LastAccessTime = (Get-Item $Mp4FilePath).LastAccessTime.ToString("yyyy-MM-dd HH:mm:ss")
+    $LastWriteTime = (Get-Item $Mp4FilePath).LastWriteTime.ToString("yyyy-MM-dd HH:mm:ss")
+
+    $(Get-Item $OutputFilePath).CreationTime = $CreationTime
+    $(Get-Item $OutputFilePath).LastAccessTime = $LastAccessTime
+    $(Get-Item $OutputFilePath).LastWriteTime = $LastWriteTime
 }
