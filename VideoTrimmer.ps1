@@ -4,10 +4,14 @@ param (
     [Parameter(Mandatory=$false)]
     [string]$OutputFolder = "./",
     [Parameter(Mandatory=$false)]
-    [switch]$DeleteAfterGeneration
+    [switch]$DeleteAfterGeneration,
+    [Parameter(Mandatory=$false)]
+    [string[]]$InputFormats = "*mp4",
+    [Parameter(Mandatory=$false)]
+    [string[]]$OutputFormat = "mp4"
 )
 
-$Mp4FilePaths = Get-ChildItem -Path $FolderPath -Include "*.mp4" -Recurse
+$Mp4FilePaths = Get-ChildItem -Path $FolderPath -Include $InputFormats -Recurse
 
 foreach($Mp4FilePath in $Mp4FilePaths) {
     $FileName = (Get-Item $Mp4FilePath).Basename
@@ -16,7 +20,7 @@ foreach($Mp4FilePath in $Mp4FilePaths) {
     $Start = "00:" + $FileInfo[1].Trim().Replace(".", ":")
     $End = "00:" + $FileInfo[2].Trim().Replace(".", ":")
 
-    $OutputFilePath = "$OutputFolder/$VideoName.mp4"
+    $OutputFilePath = "$OutputFolder/$VideoName.$OutputFormat"
 
     ffmpeg -ss $Start `
             -to $End `
