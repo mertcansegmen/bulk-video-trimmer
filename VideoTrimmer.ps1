@@ -2,7 +2,9 @@ param (
     [Parameter(Mandatory=$false)]
     [string]$FolderPath = "./",
     [Parameter(Mandatory=$false)]
-    [string]$OutputFolder = "./"
+    [string]$OutputFolder = "./",
+    [Parameter(Mandatory=$false)]
+    [switch]$DeleteAfterGeneration
 )
 
 $Mp4FilePaths = Get-ChildItem -Path $FolderPath -Include "*.mp4" -Recurse
@@ -29,4 +31,10 @@ foreach($Mp4FilePath in $Mp4FilePaths) {
     $(Get-Item $OutputFilePath).CreationTime = $CreationTime
     $(Get-Item $OutputFilePath).LastAccessTime = $LastAccessTime
     $(Get-Item $OutputFilePath).LastWriteTime = $LastWriteTime
+}
+
+If($DeleteAfterGeneration) {
+    foreach($Mp4FilePath in $Mp4FilePaths) {
+        Remove-Item $Mp4FilePath
+    }
 }
