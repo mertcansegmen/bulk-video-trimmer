@@ -8,7 +8,7 @@ param (
     [Parameter(Mandatory=$false)]
     [string[]]$InputFormats = "*mp4",
     [Parameter(Mandatory=$false)]
-    [string[]]$OutputFormat = "mp4"
+    [string[]]$OutputFormat
 )
 
 $Mp4FilePaths = Get-ChildItem -Path $FolderPath -Include $InputFormats -Recurse
@@ -19,8 +19,9 @@ foreach ($Mp4FilePath in $Mp4FilePaths) {
     $VideoName = $FileInfo[0].Trim()
     $Start = $FileInfo[1].Trim().Replace(".", ":")
     $End = $FileInfo[2].Trim().Replace(".", ":")
+    $Format = If ($OutputFormat) {".$OutputFormat"} Else {(Get-Item $Mp4FilePath).Extension}
 
-    $OutputFilePath = "$OutputFolder/$VideoName.$OutputFormat"
+    $OutputFilePath = "$OutputFolder/$VideoName$Format"
 
     ffmpeg -ss $Start `
             -to $End `
