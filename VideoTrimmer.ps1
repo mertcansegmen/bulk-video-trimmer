@@ -1,6 +1,6 @@
 param (
     [Parameter(Mandatory=$false)]
-    [string]$FolderPath = "./",
+    [string]$SourceFolder = "./",
     [Parameter(Mandatory=$false)]
     [string]$OutputFolder = "./",
     [Parameter(Mandatory=$false)]
@@ -13,29 +13,30 @@ param (
     [switch]$DontOverwrite
 )
 
-$Mp4FilePaths = Get-ChildItem -Path $FolderPath -Include $InputFormats -Recurse
+$FilePaths = Get-ChildItem -Path $SourceFolder -Include $InputFormats -Recurse
 
-foreach ($Mp4FilePath in $Mp4FilePaths) {
-    $FileName = (Get-Item $Mp4FilePath).Basename
+foreach ($FilePath in $FilePaths) {
+    $FileName = (Get-Item $FilePath).Basename
     $FileInfo = "$FileName" -Split ","
+
     $VideoName = $FileInfo[0].Trim()
     $Start = $FileInfo[1].Trim().Replace(".", ":")
     $End = $FileInfo[2].Trim().Replace(".", ":")
-    $Format = If ($OutputFormat) {".$OutputFormat"} Else {(Get-Item $Mp4FilePath).Extension}
+    $Format = If ($OutputFormat) {".$OutputFormat"} Else {(Get-Item $FilePath).Extension}
     $Overwrite = If ($DontOverwrite) {"-n"} Else {"-y"}
 
     $OutputFilePath = "$OutputFolder/$VideoName$Format"
 
     ffmpeg -ss $Start `
             -to $End `
-            -i "$Mp4FilePath" `
+            -i "$FilePath" `
             -vcodec libx265 `
             -crf 28 $OutputFilePath `
             $Overwrite
 
-    $CreationTime = (Get-Item $Mp4FilePath).CreationTime.ToString("yyyy-MM-dd HH:mm:ss")
-    $LastAccessTime = (Get-Item $Mp4FilePath).LastAccessTime.ToString("yyyy-MM-dd HH:mm:ss")
-    $LastWriteTime = (Get-Item $Mp4FilePath).LastWriteTime.ToString("yyyy-MM-dd HH:mm:ss")
+    $CreationTime = (Get-Item $FilePath).CreationTime.ToString("yyyy-MM-dd HH:mm:ss")
+    $LastAccessTime = (Get-Item $FilePath).LastAccessTime.ToString("yyyy-MM-dd HH:mm:ss")
+    $LastWriteTime = (Get-Item $FilePath).LastWriteTime.ToString("yyyy-MM-dd HH:mm:ss")
 
     (Get-Item $OutputFilePath).CreationTime = $CreationTime
     (Get-Item $OutputFilePath).LastAccessTime = $LastAccessTime
@@ -43,7 +44,7 @@ foreach ($Mp4FilePath in $Mp4FilePaths) {
 }
 
 if ($DeleteAfterGeneration) {
-    foreach($Mp4FilePath in $Mp4FilePaths) {
-        Remove-Item $Mp4FilePath
+    foreach($FilePath in $FilePaths) {
+        Remove-Item $FilePath
     }
 }
