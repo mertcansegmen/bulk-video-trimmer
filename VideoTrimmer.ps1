@@ -20,8 +20,16 @@ foreach ($FilePath in $FilePaths) {
     $FileInfo = "$FileName" -Split ","
 
     $VideoName = $FileInfo[0].Trim()
-    $Start = $FileInfo[1].Trim().Replace(".", ":")
-    $End = $FileInfo[2].Trim().Replace(".", ":")
+    If ($FileInfo[2]) {
+        $Start = $FileInfo[1].Trim().Replace(".", ":")
+        $End = $FileInfo[2].Trim().Replace(".", ":")
+    } ElseIf ($FileInfo[1]) {
+        $Start = $FileInfo[1].Trim().Replace(".", ":")
+        $End = "99:59:59"
+    } Else {
+        $Start = "00:00"
+        $End = "99:59:59"
+    }
     $Format = If ($OutputFormat) {".$OutputFormat"} Else {(Get-Item $FilePath).Extension}
     $Overwrite = If ($DontOverwrite) {"-n"} Else {"-y"}
 
