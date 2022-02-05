@@ -4,7 +4,7 @@ param (
     [Parameter(Mandatory=$false)]
     [string]$OutputFolder = "./",
     [Parameter(Mandatory=$false)]
-    [switch]$DeleteAfterGeneration,
+    [switch]$DeleteSources,
     [Parameter(Mandatory=$false)]
     [string[]]$InputFormats = "*mp4",
     [Parameter(Mandatory=$false)]
@@ -51,7 +51,7 @@ foreach ($FilePath in $FilePaths) {
     (Get-Item $OutputFilePath).LastWriteTime = $LastWriteTime
 }
 
-if ($DeleteAfterGeneration) {
+if ($DeleteSources) {
     foreach($FilePath in $FilePaths) {
         Remove-Item $FilePath
     }
