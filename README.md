@@ -12,14 +12,14 @@
 
 ### Parameters
 
-| Parameter                    | Description                                                                                                                    | Example                                               | Mandatory | Type           | Default Value   |
-|------------------------------|--------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------|-----------|----------------|-----------------|
-| ```-SourceFolder```          | Path to the folder where the input videos are kept.                                                                            | "C:/Users/mertc/Desktop/mert/videos/games"            | No        | ```String```   | ```./```        |
-| ```-OutputFolder```          | Path to the folder where the output videos will be placed into.                                                                | "C:/Users/mertc/Desktop/mert/videos/games-compressed" | No        | ```String```   | ```./```        |
-| ```-DeleteSources```         | Whether or not the converted videos will be deleted after the conversion is completed.                                         |                                                       | No        | ```Switch```   |                 |
-| ```-InputFormats```          | File formats that will be taken account when finding videos inside the source folder.                                          | ```"*.mp4", "*.webm", "*.flv"```                      | No        | ```String[]``` | ```["*.mp4"]``` |
-| ```-OutputFormat```          | File format that the videos will be outputted as. If not given, the output format will be same as the source video.            | ```".mkv"```                                          | No        | ```String```   |                 |
-| ```-DontOverwrite```         | If an output file already exists, the cmdlet will automatically overwrite it. If ```-DontOverwrite``` is set, it will skip it. |                                                       | No        | ```Switch```   |                 |
+| Parameter                    | Description                                                                                                                    | Mandatory | Type           | Default Value   |
+|------------------------------|--------------------------------------------------------------------------------------------------------------------------------|-----------|----------------|-----------------|
+| ```-SourceFolder```          | Path to the folder where the input videos are kept.                                                                            | No        | ```String```   | ```./```        |
+| ```-OutputFolder```          | Path to the folder where the output videos will be placed into.                                                                | No        | ```String```   | ```./```        |
+| ```-DeleteSources```         | Whether or not the converted videos will be deleted after the conversion is completed.                                         | No        | ```Switch```   |                 |
+| ```-InputFormats```          | File formats that will be taken account when finding videos inside the source folder.                                          | No        | ```String[]``` | ```["*.mp4"]``` |
+| ```-OutputFormat```          | File format that the videos will be outputted as. If not given, the output format will be same as the source video.            | No        | ```String```   |                 |
+| ```-DontOverwrite```         | If an output file already exists, the cmdlet will automatically overwrite it. If ```-DontOverwrite``` is set, it will skip it. | No        | ```Switch```   |                 |
 
 ### File Names
 
