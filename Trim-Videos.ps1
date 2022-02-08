@@ -13,46 +13,46 @@ param (
     [switch]$DontOverwrite
 )
 
-$FilePaths = Get-ChildItem -Path $SourceFolder -Include $InputFormats -Recurse
+$filePaths = Get-ChildItem -Path $SourceFolder -Include $InputFormats -Recurse
 
-foreach ($FilePath in $FilePaths) {
-    $FileName = (Get-Item $FilePath).Basename
-    $FileInfo = "$FileName" -Split ","
+foreach ($filePath in $filePaths) {
+    $fileName = (Get-Item $filePath).Basename
+    $fileInfo = "$fileName" -Split ","
 
-    $VideoName = $FileInfo[0].Trim()
-    If ($FileInfo[2]) {
-        $Start = $FileInfo[1].Trim().Replace(".", ":")
-        $End = $FileInfo[2].Trim().Replace(".", ":")
-    } ElseIf ($FileInfo[1]) {
-        $Start = $FileInfo[1].Trim().Replace(".", ":")
-        $End = "99:59:59"
+    $videoName = $fileInfo[0].Trim()
+    If ($fileInfo[2]) {
+        $start = $fileInfo[1].Trim().Replace(".", ":")
+        $end = $fileInfo[2].Trim().Replace(".", ":")
+    } ElseIf ($fileInfo[1]) {
+        $start = $fileInfo[1].Trim().Replace(".", ":")
+        $end = "99:59:59"
     } Else {
-        $Start = "00:00"
-        $End = "99:59:59"
+        $start = "00:00"
+        $end = "99:59:59"
     }
-    $Format = If ($OutputFormat) {".$OutputFormat"} Else {(Get-Item $FilePath).Extension}
-    $Overwrite = If ($DontOverwrite) {"-n"} Else {"-y"}
+    $format = If ($OutputFormat) {".$OutputFormat"} Else {(Get-Item $filePath).Extension}
+    $overwrite = If ($DontOverwrite) {"-n"} Else {"-y"}
 
-    $OutputFilePath = "$OutputFolder/$VideoName$Format"
+    $outputFilePath = "$OutputFolder/$videoName$format"
 
-    ffmpeg -ss $Start `
-            -to $End `
-            -i "$FilePath" `
+    ffmpeg -ss $start `
+            -to $end `
+            -i "$filePath" `
             -vcodec libx265 `
-            -crf 28 $OutputFilePath `
-            $Overwrite
+            -crf 28 $outputFilePath `
+            $overwrite
 
-    $CreationTime = (Get-Item $FilePath).CreationTime.ToString("yyyy-MM-dd HH:mm:ss")
-    $LastAccessTime = (Get-Item $FilePath).LastAccessTime.ToString("yyyy-MM-dd HH:mm:ss")
-    $LastWriteTime = (Get-Item $FilePath).LastWriteTime.ToString("yyyy-MM-dd HH:mm:ss")
+    $creationTime = (Get-Item $filePath).CreationTime.ToString("yyyy-MM-dd HH:mm:ss")
+    $lastAccessTime = (Get-Item $filePath).LastAccessTime.ToString("yyyy-MM-dd HH:mm:ss")
+    $lastWriteTime = (Get-Item $filePath).LastWriteTime.ToString("yyyy-MM-dd HH:mm:ss")
 
-    (Get-Item $OutputFilePath).CreationTime = $CreationTime
-    (Get-Item $OutputFilePath).LastAccessTime = $LastAccessTime
-    (Get-Item $OutputFilePath).LastWriteTime = $LastWriteTime
+    (Get-Item $outputFilePath).CreationTime = $creationTime
+    (Get-Item $outputFilePath).LastAccessTime = $lastAccessTime
+    (Get-Item $outputFilePath).LastWriteTime = $lastWriteTime
 }
 
 if ($DeleteSources) {
-    foreach($FilePath in $FilePaths) {
-        Remove-Item $FilePath
+    foreach($filePath in $filePaths) {
+        Remove-Item $filePath
     }
 }
