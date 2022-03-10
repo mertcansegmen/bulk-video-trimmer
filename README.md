@@ -13,13 +13,14 @@
 ### Parameters
 
 | Parameter &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Description                                                                                                                    | Mandatory | Type           | Default Value   |
-|------------------------------|--------------------------------------------------------------------------------------------------------------------------------|-----------|----------------|-----------------|
-| ```-SourceFolder```          | Path to the folder where the input videos are kept.                                                                            | No        | ```String```   | ```./```        |
-| ```-OutputFolder```          | Path to the folder where the output videos will be placed into.                                                                | No        | ```String```   | ```./```        |
-| ```-DeleteSources```         | Whether or not the converted videos will be deleted after the conversion is completed.                                         | No        | ```Switch```   |                 |
-| ```-InputFormats```          | File formats that will be taken account when finding videos inside the source folder.                                          | No        | ```String[]``` | ```"*.mp4"```   |
-| ```-OutputFormat```          | File format that the videos will be outputted as. If not given, the output format will be same as the source video.            | No        | ```String```   |                 |
-| ```-DontOverwrite```         | If an output file already exists, the cmdlet will automatically overwrite it. If ```-DontOverwrite``` is set, it will skip it. | No        | ```Switch```   |                 |
+|------------------------------|--------------------------------------------------------------------------------------------------------------------------------|-----------|----------------|---------------------|
+| ```-SourceFolder```          | Path to the folder where the input videos are kept.                                                                            | No        | ```String```   | ```./```            |
+| ```-OutputFolderLocation```  | Path to the folder where the output folder will be placed into.                                                                | No        | ```String```   | ```$SourceFolder``` |
+| ```-OutputFolderName```      | Name of the folder containing output videos.                                                                                   | No        | ```String```   | ```output```        |
+| ```-DeleteSources```         | Whether or not the converted videos will be deleted after the conversion is completed.                                         | No        | ```Switch```   |                     |
+| ```-InputFormats```          | File formats that will be taken account when finding videos inside the source folder.                                          | No        | ```String[]``` | ```"*.mp4"```       |
+| ```-OutputFormat```          | File format that the videos will be outputted as. If not given, the output format will be same as the source video.            | No        | ```String```   |                     |
+| ```-DontOverwrite```         | If an output file already exists, the cmdlet will automatically overwrite it. If ```-DontOverwrite``` is set, it will skip it. | No        | ```Switch```   |                     |
 
 ### File Names
 
@@ -39,17 +40,31 @@ You need to define the output file name, the start time and the end time of the 
 # Gets mp4 and flv files from C:/Users/mertc/Desktop/mert/videos/games folder, trims 
 # them according to info from their file name, puts the output files into 
 # C:/Users/mertc/Desktop/mert/videos/games-compressed folder.
-./Trim-Videos -SourcePath "C:/Users/mertc/Desktop/mert/videos/games" -OutputPath "C:/Users/mertc/Desktop/mert/videos/games-compressed" -InputFormats "*.mp4", "*.flv"
+./Trim-Videos.ps1 `
+    -SourceFolder "C:/Users/mertc/Desktop/mert/videos/games" `
+    -OutputFolderLocation "C:/Users/mertc/Desktop/mert/videos" `
+    -OutputFolderName "games-compressed" `
+    -InputFormats "*.mp4", "*.flv"
 
 # Gets mp4 and flv files from C:/Users/mertc/Desktop/mert/videos/games folder, trims 
 # them according to info from their file name, puts the output files into 
 # C:/Users/mertc/Desktop/mert/videos/games-compressed folder as mp4 file format.
-./Trim-Videos -SourcePath "C:/Users/mertc/Desktop/mert/videos/games" -OutputPath "C:/Users/mertc/Desktop/mert/videos/games-compressed" -InputFormats "*.mp4", "*.flv" -OutputFormat ".mp4"
+./Trim-Videos.ps1 `
+    -SourceFolder "C:/Users/mertc/Desktop/mert/videos/games" `
+    -OutputFolderLocation "C:/Users/mertc/Desktop/mert/videos" `
+    -OutputFolderName "games-compressed" `
+    -InputFormats "*.mp4", "*.flv" `
+    -OutputFormat ".mp4"
 
 # Gets mp4 files from C:/Users/mertc/Desktop/mert/videos/games folder(because default 
 # source file format is mp4), trims them according to info from their file name, puts 
 # the output files into C:/Users/mertc/Desktop/mert/videos/games-compressed folder and
 # deletes the videos it trimmed. If there is any existing file with the output file
 # name, it skips them.
-./Trim-Videos -SourcePath "C:/Users/mertc/Desktop/mert/videos/games" -OutputPath "C:/Users/mertc/Desktop/mert/videos/games-compressed" -DeleteSources -DontOverwrite
+./Trim-Videos.ps1 `
+    -SourceFolder "C:/Users/mertc/Desktop/mert/videos/games" `
+    -OutputFolderLocation "C:/Users/mertc/Desktop/mert/videos" `
+    -OutputFolderName "games-compressed" `
+    -DeleteSources `
+    -DontOverwrite
 ```
