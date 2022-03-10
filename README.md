@@ -12,7 +12,7 @@
 
 ### Parameters
 
-| Parameter &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Description                                                                                                                    | Mandatory | Type           | Default Value   |
+| Parameter &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Description                                                                                                                    | Mandatory | Type           | Default Value   |
 |------------------------------|--------------------------------------------------------------------------------------------------------------------------------|-----------|----------------|---------------------|
 | ```-SourceFolder```          | Path to the folder where the input videos are kept.                                                                            | No        | ```String```   | ```./```            |
 | ```-OutputFolderLocation```  | Path to the folder where the output folder will be placed into.                                                                | No        | ```String```   | ```$SourceFolder``` |
