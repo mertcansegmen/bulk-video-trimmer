@@ -1,6 +1,6 @@
 # video-trimmer
 
-```video-trimmer``` is a PowerShell cmdlet that trims and compresses videos using the command line program ```ffmpeg```. The cmdlet uses the filename to decide how to trim the video. It does not take any parameters for the compression.
+```video-trimmer``` is a PowerShell cmdlet that trims and compresses videos using the command line program ```ffmpeg```. It is created to trim/compress large amount of videos easily. How it works is that it takes multiple video files in a folder and puts them to another folder after compressing them. The cmdlet uses the file name to decide how to trim the video. It does not take any parameters for the compression.
 
 ## Requirements
 
