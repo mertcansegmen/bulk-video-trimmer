@@ -2,7 +2,9 @@ param (
     [Parameter(Mandatory=$false)]
     [string]$SourceFolder = "./",
     [Parameter(Mandatory=$false)]
-    [string]$OutputFolder = "./",
+    [string]$OutputFolderLocation = $SourceFolder,
+    [Parameter(Mandatory=$false)]
+    [string]$OutputFolderName = "output",
     [Parameter(Mandatory=$false)]
     [switch]$DeleteSources,
     [Parameter(Mandatory=$false)]
@@ -33,7 +35,10 @@ foreach ($filePath in $filePaths) {
     $format = If ($OutputFormat) {".$OutputFormat"} Else {(Get-Item $filePath).Extension}
     $overwrite = If ($DontOverwrite) {"-n"} Else {"-y"}
 
-    $outputFilePath = "$OutputFolder/$videoName$format"
+    $outputFolder = "$OutputFolderLocation/$OutputFolderName"
+    $outputFilePath = "$outputFolder/$videoName$format"
+    
+    New-Item -Path "$OutputFolderLocation" -Name "$OutputFolderName" -ItemType "directory"
 
     ffmpeg -ss $start `
             -to $end `
