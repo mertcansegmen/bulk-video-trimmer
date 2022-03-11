@@ -15,6 +15,9 @@ param (
     [switch]$DontOverwrite
 )
 
+$outputFolder = "$OutputFolderLocation/$OutputFolderName"
+New-Item -Path "$OutputFolderLocation" -Name "$OutputFolderName" -ItemType "directory"
+
 $filePaths = Get-ChildItem -Path $SourceFolder -Include $InputFormats -Recurse
 
 foreach ($filePath in $filePaths) {
@@ -35,10 +38,7 @@ foreach ($filePath in $filePaths) {
     $format = If ($OutputFormat) {".$OutputFormat"} Else {(Get-Item $filePath).Extension}
     $overwrite = If ($DontOverwrite) {"-n"} Else {"-y"}
 
-    $outputFolder = "$OutputFolderLocation/$OutputFolderName"
     $outputFilePath = "$outputFolder/$videoName$format"
-    
-    New-Item -Path "$OutputFolderLocation" -Name "$OutputFolderName" -ItemType "directory"
 
     ffmpeg -ss $start `
             -to $end `
