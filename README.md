@@ -71,3 +71,4 @@ You need to define the output file name, the start time and the end time of the 
 ## TODO
 
 - Add actions for converting the script to exe file
+- Check for output folder name and location if they exist
