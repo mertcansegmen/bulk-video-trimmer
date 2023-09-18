@@ -1,6 +1,6 @@
-# video-trimmer
+# bulk-video-trimmer
 
-```video-trimmer``` is a PowerShell cmdlet that trims and compresses videos using the command line program ```ffmpeg```. It is created to trim/compress large amount of videos easily. How it works is that it takes multiple video files in a folder and puts them to another folder after compressing them. The cmdlet uses the file name to decide how to trim the video. It does not take any parameters for the compression.
+```bulk-video-trimmer``` is a PowerShell cmdlet that trims and compresses videos using the command line program ```ffmpeg```. It is created to trim/compress large amounts of videos easily. How it works is that it takes multiple video files in a folder and puts them in another folder after trimming/compressing them. The cmdlet uses the file name to decide how to trim the video, check the [File Names section](#file-names) for details. It does not take any parameters for the compression.
 
 ## Requirements
 
@@ -24,7 +24,7 @@
 
 ### File Names
 
-You need to define the output file name, the start time and the end time of the video using the source file name. The format is: ```<filename>,<starting-point>,<ending-point>``` where starting and ending point is not mandatory.
+You need to define the output file name, the start time, and the end time of the video using the source file name. The format is: ```<filename>,<starting-point>,<ending-point>``` where starting and ending point is not mandatory.
 
 #### File Name Examples
 
