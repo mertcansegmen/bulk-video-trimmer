@@ -6,7 +6,7 @@
 
 ```video-trimmer``` requires the following to run:
 
-- [ffmpeg](https://github.com/FFmpeg/FFmpeg) needs to be installed.
+- [FFmpeg](https://github.com/FFmpeg/FFmpeg) must be installed and added to the PATH.
 
 ## Usage
 
